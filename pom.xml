@@ -1,0 +1,243 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.5.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+  <groupId>br.com.mv</groupId>
+  <artifactId>mv-api</artifactId>
+  	<version>0.0.1</version>
+  <packaging>war</packaging>
+  <name>mv-api</name>
+  
+
+<properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+	<timestamp>${maven.build.timestamp}</timestamp>
+	<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
+
+	<page.main>main.jsp</page.main>
+	<page.logout>/login.jsp</page.logout>
+	<project.version>0.0.1</project.version>
+	<poi.version>3.14</poi.version>
+	<jmockit.version>1.8</jmockit.version>
+	</properties>
+	
+	<dependencies>
+		
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.3.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>uk.co.jemos.podam</groupId>
+			<artifactId>podam</artifactId>
+			<version>3.6.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jmockit</groupId>
+		    <artifactId>jmockit</artifactId>
+		    <version>1.8</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		
+		
+	</dependencies>
+		
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven.oracle.com</id>
+			<name>oracle-maven-repo</name>
+			<url>https://maven.oracle.com</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<spring.profile>local</spring.profile>
+				 <spring.profiles.to.activate>local</spring.profiles.to.activate>
+				<endpoint>https://localhost:8080</endpoint>
+				<page.main>main</page.main>
+				<page.logout>login</page.logout>
+			</properties>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+		</profile>
+		
+		<profile>
+			<id>mv</id>
+			<properties>
+				<spring.profile>mv</spring.profile>
+				<spring.profiles.to.activate>mv</spring.profiles.to.activate>
+				<endpoint>http://linux:8080/mv-sgp-web</endpoint>
+				<page.main>main</page.main>
+				<page.logout>login</page.logout>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>dsv</id>
+			<properties>
+				<spring.profile>dsv</spring.profile>
+				<spring.profiles.to.activate>dev</spring.profiles.to.activate>
+				<endpoint>https://mv-web-d.local/PROS</endpoint>
+				<page.main>main.jsp</page.main>
+				<page.logout>/MV-PORTAL</page.logout>
+			</properties>
+		</profile>
+
+
+		<profile>
+			<id>hml</id>
+			<properties>
+				<spring.profile>hml</spring.profile>
+				<spring.profiles.to.activate>hml</spring.profiles.to.activate>
+				<endpoint>https://mv-web-h.local/SGP</endpoint>
+				<page.main>main.jsp</page.main>
+				<page.logout>login.jsp</page.logout>
+			</properties>
+		</profile>
+
+
+		<profile>
+			<id>prd</id>
+			<properties>
+				<spring.profile>prd</spring.profile>
+				<spring.profiles.to.activate>prd</spring.profiles.to.activate>
+				<endpoint>https://prd:8080</endpoint>
+				<page.main>main</page.main>
+				<page.logout>login</page.logout>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<warName>mv-api</warName>
+					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<attachClasses>true</attachClasses>
+
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<finalName>mv-api</finalName>
+	</build>
+</project>
